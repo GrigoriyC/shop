@@ -1,7 +1,7 @@
 from django.urls import path
 
-from shop.views import home_view # Можно так - from .views import home_view
+from . import views
 
 urlpatterns = [
-  path("", home_view)
+  path("products/", views.get_product_list),
 ]

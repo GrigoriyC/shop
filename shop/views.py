@@ -1,5 +1,9 @@
 from django.shortcuts import render
-from django.http import HttpResponse
 
-def home_view(request):
-  return HttpResponse("Главная страница")
+from shop.models import Product
+
+
+def get_product_list(request):
+  products = Product.objects.all()
+
+  return render(request, 'shop/product_list.html', context={'products': products})
