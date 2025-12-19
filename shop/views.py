@@ -14,9 +14,6 @@ def get_product_detail(request, product_id):
 
 
 def create_product(request):
-  if request.method == "GET":
-    return render(request, 'shop/product_add.html')
-  
   if request.method == "POST":
     #product = Product.objects.create(title=request.POST.get('title'), text=request.POST.get('text'), price=request.POST.get('price'))
     title = request.POST.get('title').strip()
@@ -45,3 +42,5 @@ def create_product(request):
       }
 
       return render(request, 'shop/product_add.html', context)
+    
+  return render(request, 'shop/product_add.html')
