@@ -10,17 +10,33 @@
 
         <div>
             <label for="titleInput">Наименование товара:</label>
-            <input id="titleInput" name="title" type="text" placeholder="Наименование (максимальная длина 200 символов)" required>
+            <input 
+                id="titleInput"
+                name="title"
+                type="text"
+                value="{{ title|default:'' }}"
+                placeholder="Наименование товара (максимальная длина 200 символов)"
+            >
+            {% if errors.title %}
+                <div style="color: red;">{{ errors.title }}</div>
+            {% endif %}
         </div>
 
         <div>
             <label for="textInput">Описание товара:</label>
-            <textarea id="textInput" name="text" rows="3"></textarea>
+            <textarea id="textInput" name="text" rows="3">{{ text|default:'' }}</textarea>
+            {% if errors.text %}
+                <div style="color: red;">{{ errors.text }}</div>
+            {% endif %}
         </div>
 
         <div>
             <label for="textInput">Цена товара:</label>
-            <input type="text" name="price" >
+            <!-- <input type="text" name="price" > -->
+            <textarea id="textInput" name="price" >{{ price|default:'' }}</textarea>
+            {% if errors.price %}
+                <div style="color: red;">{{ errors.price }}</div>
+            {% endif %}
         </div>
 
         <button type="submit">Создать</button>
