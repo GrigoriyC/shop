@@ -1,29 +1,21 @@
 from django import forms
 
+from shop.models import Product
 
-class ProductForm(forms.Form):
-  title = forms.CharField(
-    max_length=200,
-    label="Наименование товара:",
-    required=False,
-    widget=forms.TextInput(attrs={
-      'placeholder': "Наименование (максимальная длина 200 символов)"
-    }) # Можно передавать другие атрибуты, например, "class": 'title-input'
-  )
-
-  text = forms.CharField(
-    label="Описание товара:",
-    widget=forms.Textarea(attrs={
-      'row': 3
-    })
-  )
-
-  price = forms.CharField(
-  label="Цена товара:",
-  #widget=forms.Textarea(attrs={
-   # 'row': 1
-  #})
-)
+class ProductForm(forms.ModelForm):
+  class Meta:
+    model = Product
+    fields = ['title', 'text', 'price']
+    widgets = {
+      'title': forms.TextInput(attrs={
+        'placeholder': "наименование (максимальная длина 200 символов)"
+      })
+    }
+    labels = {
+      'title': 'Наименование товара:',
+      'text': 'Описание товара:',
+      'price': 'Цена'
+    }
 
   def clean_title(self):
     title = self.cleaned_data['title'].strip()
@@ -38,7 +30,7 @@ class ProductForm(forms.Form):
   
 
   def clean_price(self):
-    price = self.cleaned_data['price'].strip()
+    price = self.cleaned_data['price']
 
     if not price:
       raise forms.ValidationError("Цена товара обязательна.")

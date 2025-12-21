@@ -20,11 +20,7 @@ def create_product(request):
   if request.method == "POST":
     #product = Product.objects.create(title=request.POST.get('title'), text=request.POST.get('text'), price=request.POST.get('price'))
     if form.is_valid():
-      product = Product.objects.create(
-        title=form.cleaned_data['title'],
-        text=form.cleaned_data['text'],
-        price=form.cleaned_data['price']
-      )    
+      product = form.save()     
 
       return redirect('product_detail', product_id=product.id)
     # Если форма невалидна, продолжим к render ниже  
