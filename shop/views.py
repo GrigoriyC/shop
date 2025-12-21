@@ -26,3 +26,21 @@ def create_product(request):
     # Если форма невалидна, продолжим к render ниже  
   
   return render(request, 'shop/product_add.html', {"form": form})
+
+
+def update_product(request, product_id):
+  product = get_object_or_404(Product, id=product_id)
+
+  if request.method == "POST":
+    form = ProductForm(request.POST, instance=product)
+
+    if form.is_valid():
+      form.save()
+
+      return redirect("product_detail", product_id=product.id)
+    else:
+      return render(request, 'shop/product_update.html', context={"form": form})
+
+  form = ProductForm(instance=product)
+
+  return render(request, 'shop/product_update.html', context={"form": form})
